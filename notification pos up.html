@@ -9,7 +9,7 @@
         transition: background-color 0.5s ease;
       }
 
-      #notification {
+      #notifi {
         position: fixed;
         top: 50%;
         left: 50%;
@@ -22,7 +22,7 @@
         display: none;
       }
 
-      #notification.active {
+      #notifi.active {
         display: block;
       }
 
@@ -41,33 +41,34 @@
         color: #fff;
       }
 
-      .dark-mode #notification {
+      .dark-mode #notifi {
         background-color: #c70039;
       }
     </style>
   </head>
   <body>
     <button id="theme-toggle">Toggle Theme</button>
-    <div id="notification"></div>
+    <div id="notifi"></div>
     <script>
-      const notification = document.getElementById('notification');
+      const notification = document.getElementById('notifi');
 
       function showNotification() {
-  fetch('https://official-joke-api.appspot.com/random_joke')
-    .then(response => response.json())
-    .then(data => {
-      notification.classList.add('active');
-      notification.innerHTML = data.message;
-      const audio = new Audio('Rick_Roll_Meme_Sound_Effect_Never_(getmp3.pro).mp3');
-      audio.play();
-      setTimeout(() => {
-        notification.classList.remove('active');
-      }, 9000);
-    })
-    .catch(error => {
-      console.error(error);
-    });
-}
+        notification.innerHTML = ''
+        fetch('https://official-joke-api.appspot.com/random_joke')
+          .then(response => response.json())
+          .then(data => {
+            notification.classList.add('active');
+            notification.innerHTML = data.setup + '<br />' + data.punchline;
+            const audio = new Audio('Rick_Roll_Meme_Sound_Effect_Never_(getmp3.pro).mp3');
+              audio.play();
+            setTimeout(() => {
+              notification.classList.remove('active');
+            }, 9000);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      }
 
       setInterval(showNotification, 10000);
 
